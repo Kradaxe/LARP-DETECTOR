@@ -1,44 +1,26 @@
-# app/analyzers/buzzword_analyzer.py
-
-from typing import Dict, List
-
-
-BUZZWORDS = {
+BUZZWORDS = [
     "scalable",
-    "cutting-edge",
-    "innovative",
     "robust",
+    "production-ready",
     "enterprise-grade",
-    "synergy",
-    "synergistic",
-    "ai-powered",
-    "disruptive",
-    "next-generation",
-    "state-of-the-art",
-    "modern",
-    "high-performance",
-    "world-class",
-    "industry-leading",
-    "transformative"
-}
+    "highly available",
+    "distributed",
+    "microservices",
+    "real-time",
+    "AI-powered",
+    "state-of-the-art"
+]
 
 
-def analyze_buzzwords(text: str) -> Dict:
-    """
-    Analyze text for generic buzzword usage.
-    """
+def analyze_buzzwords(text: str):
 
-    text_lower = text.lower()
+    found = []
 
-    found_buzzwords: List[str] = []
-
-    for buzzword in BUZZWORDS:
-        if buzzword in text_lower:
-            found_buzzwords.append(buzzword)
-
-    score = min(len(found_buzzwords) * 2, 10)
+    for word in BUZZWORDS:
+        if word.lower() in text.lower():
+            found.append(word)
 
     return {
-        "buzzword_score": score,
-        "buzzwords_found": found_buzzwords
+        "count": len(found),
+        "found": found
     }

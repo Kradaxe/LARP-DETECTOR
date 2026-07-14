@@ -1,67 +1,14 @@
-import re
-
-TECHNOLOGIES = [
-    "python",
-    "fastapi",
-    "redis",
-    "postgresql",
-    "mongodb",
-    "docker",
-    "kubernetes",
-    "kafka",
-    "aws",
-    "gcp",
-    "react",
-    "nextjs",
-    "typescript",
-    "nodejs",
-    "tensorflow",
-    "pytorch",
-    "langchain",
-    "rag"
-]
-
-ACTION_VERBS = [
-    "built",
-    "implemented",
-    "designed",
-    "optimized",
-    "deployed",
-    "reduced",
-    "improved",
-    "scaled",
-    "developed",
-    "integrated"
-]
+from app.analyzers.technology_analyzer import analyze_technologies
+from app.analyzers.metrics_analyzer import analyze_metrics
+from app.analyzers.buzzword_analyzer import analyze_buzzwords
+from app.analyzers.architecture_analyzer import analyze_architecture
 
 
 def extract_signals(text: str):
-    lower_text = text.lower()
-
-    technologies_found = [
-        tech for tech in TECHNOLOGIES
-        if tech in lower_text
-    ]
-
-    action_verbs_found = [
-        verb for verb in ACTION_VERBS
-        if verb in lower_text
-    ]
-
-    numbers_found = re.findall(r'\d+(?:\.\d+)?', text)
-
-    percentages_found = re.findall(r'\d+(?:\.\d+)?%', text)
-
-    latency_found = re.findall(
-        r'\d+\s?(?:ms|milliseconds|seconds|sec)',
-        lower_text
-    )
 
     return {
-        "technology_count": len(technologies_found),
-        "technologies_found": technologies_found,
-        "action_verbs_found": action_verbs_found,
-        "numbers_found": numbers_found,
-        "percentages_found": percentages_found,
-        "latency_found": latency_found
+        "technologies": analyze_technologies(text),
+        "metrics": analyze_metrics(text),
+        "buzzwords": analyze_buzzwords(text),
+        "architecture": analyze_architecture(text)
     }

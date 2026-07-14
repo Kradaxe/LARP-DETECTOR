@@ -13,4 +13,9 @@ class AnalyzeResponse(BaseModel):
 
     technologies_found: List[str]
 
+    strengths: List[str]
+    weaknesses: List[str]
+
+    interview_questions: List[str]
+
     reasoning: str

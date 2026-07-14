@@ -1,11 +1,12 @@
-def get_verdict(score: int) -> str:
-    if score >= 80:
+def verdict(score: int):
+
+    if score >= 85:
         return "Highly Credible"
 
-    if score >= 60:
+    if score >= 70:
         return "Likely Genuine"
 
-    if score >= 40:
+    if score >= 50:
         return "Possibly Exaggerated"
 
     return "Potential LARP"

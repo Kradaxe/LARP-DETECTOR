@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app.models.request_models import AnalyzeRequest
-from app.models.response_models import AnalyzeResponse
+from app.schemas.request_schema import AnalyzeRequest
+from app.schemas.response_schema import AnalyzeResponse
 from app.services.analysis_service import analyze_text
 
 router = APIRouter()

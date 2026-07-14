@@ -1,10 +1,12 @@
 def calculate_score(
-    specificity: int,
-    technical_depth: int,
-    evidence: int,
-    implementation_detail: int,
-    signals: dict
-) -> int:
+    specificity,
+    technical_depth,
+    evidence,
+    implementation_detail,
+    technology_count,
+    metrics_count,
+    architecture_count
+):
 
     score = (
         specificity * 0.25 +
@@ -13,21 +15,8 @@ def calculate_score(
         implementation_detail * 0.20
     ) * 10
 
-    score += min(signals["technology_count"] * 2, 10)
-
-    score += min(
-        len(signals["action_verbs_found"]) * 2,
-        10
-    )
-
-    score += min(
-        len(signals["percentages_found"]) * 3,
-        10
-    )
-
-    score += min(
-        len(signals["latency_found"]) * 3,
-        10
-    )
+    score += min(technology_count * 2, 10)
+    score += min(metrics_count * 3, 10)
+    score += min(architecture_count * 2, 10)
 
     return min(round(score), 100)
