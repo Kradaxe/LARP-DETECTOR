@@ -1,46 +1,40 @@
-from app.services.llm_service import generate
-from app.services.scoring_service import calculate_score
-from app.services.verdict_service import verdict
+from app.services.github_metrics_service import GitHubMetricsService
+from app.services.github_credibility_service import GitHubCredibilityService
+from app.services.verdict_service import verdict as get_verdict
 
 
-async def analyze_github_profile(profile, repos):
-
-    repo_count = profile.get("public_repos", 0)
-
-    stars = 0
-    forks = 0
-    languages = set()
-
-    for repo in repos:
-        stars += repo.get("stargazers_count", 0)
-        forks += repo.get("forks_count", 0)
-
-        language = repo.get("language")
-
-        if language:
-            languages.add(language)
-
-    prompt = f"""
-    Analyze this github profile.
-
-    Repository Count: {repo_count}
-    Total Stars: {stars}
-    Total Forks: {forks}
-    Languages: {list(languages)}
-
-    Return JSON:
-
-    {{
-        "specificity": int,
-        "technical_depth": int,
-        "evidence": int,
-        "implementation_detail": int,
-        "strengths": [],
-        "weaknesses": [],
-        "reasoning": ""
-    }}
+async def analyze_github_profile(profile: dict, repos: list) -> dict:
     """
-
-    result = await generate(prompt)
-
-    return result
+    Analyze GitHub profile using comprehensive metrics and credibility signals.
+    
+    Args:
+        profile: GitHub profile data from API
+        repos: List of repository data from API
+    
+    Returns:
+        Dictionary containing complete GitHub analysis
+    """
+    username = profile.get("login", "unknown")
+    
+    # Calculate comprehensive metrics
+    metrics = GitHubMetricsService.calculate_metrics(profile, repos)
+    
+    # Generate credibility signals
+    credibility = GitHubCredibilityService.generate_credibility_signals(metrics)
+    
+    # Get verdict based on credibility score
+    verdict = get_verdict(credibility["credibility_score"])
+    
+    return {
+        "username": username,
+        "credibility_score": credibility["credibility_score"],
+        "verdict": verdict,
+        "basic_metrics": metrics["basic_metrics"],
+        "engagement_metrics": metrics["engagement_metrics"],
+        "language_metrics": metrics["language_metrics"],
+        "repository_metrics": metrics["repository_metrics"],
+        "signal_scores": credibility["signal_scores"],
+        "strengths": credibility["strengths"],
+        "weaknesses": credibility["weaknesses"],
+        "reasoning": credibility["reasoning"]
+    }

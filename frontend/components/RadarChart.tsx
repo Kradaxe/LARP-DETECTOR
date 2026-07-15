@@ -97,8 +97,8 @@ export default function RadarChart({
   }, [specificity, technical_depth, evidence, implementation_detail]);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">Analysis Radar</h2>
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+      <h2 className="text-lg font-semibold text-slate-800 mb-4">Analysis Radar</h2>
       <canvas ref={canvasRef} width={400} height={400} className="mx-auto" />
     </div>
   );

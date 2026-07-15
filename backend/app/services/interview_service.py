@@ -1,4 +1,4 @@
-from app.services.llm_service import generate_json
+from app.services.llm_service import generate
 
 
 async def generate_questions(
@@ -17,4 +17,4 @@ Technologies:
 Return JSON array only.
 """
 
-    return await generate_json(prompt)
+    return await generate(prompt)

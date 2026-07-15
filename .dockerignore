@@ -1,0 +1,9 @@
+.git
+.next
+node_modules
+frontend
+backend/.env
+backend/venv
+backend/__pycache__
+backend/**/*.pyc
+backend/larp_detector.db

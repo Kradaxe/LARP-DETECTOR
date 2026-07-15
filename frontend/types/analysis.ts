@@ -6,9 +6,69 @@ export interface AnalyzeResponse {
   evidence: number;
   implementation_detail: number;
   technologies_found: string[];
+  strengths: string[];
+  weaknesses: string[];
+  interview_questions: string[];
   reasoning: string;
 }
 
 export interface AnalyzeRequest {
   text: string;
 }
+
+export interface ClaimAnalysis {
+  claim: string;
+  credibility_score: number;
+  verdict: string;
+  reasoning: string;
+}
+
+export interface ResumeAnalysisResponse {
+  overall_credibility_score: number;
+  overall_verdict: string;
+  claim_analyses: ClaimAnalysis[];
+  suspicious_claims: string[];
+  strongest_claims: string[];
+  total_claims_analyzed: number;
+}
+
+export interface GitHubAnalysisResponse {
+  username: string;
+  credibility_score: number;
+  verdict: string;
+  basic_metrics: Record<string, unknown>;
+  engagement_metrics: Record<string, unknown>;
+  language_metrics: Record<string, unknown>;
+  repository_metrics: Record<string, unknown>;
+  signal_scores: Record<string, number>;
+  strengths: string[];
+  weaknesses: string[];
+  reasoning: string;
+}
+
+export interface CredibilityBreakdown {
+  resume_score: number;
+  github_score: number;
+  weighted_overall: number;
+  score_distribution: Record<string, number>;
+}
+
+export interface RecruiterReportResponse {
+  overall_score: number;
+  verdict: string;
+  credibility_breakdown: CredibilityBreakdown;
+  suspicious_claims: string[];
+  strengths: string[];
+  weaknesses: string[];
+  recruiter_summary: string;
+  recommendations: string[];
+}
+
+export interface FeedbackRequest {
+  analysis_id: number;
+  recruiter_agreed: boolean;
+  recruiter_comments?: string;
+  recruiter_id?: string;
+}
+
+export type AnalysisTab = 'claim' | 'resume' | 'github' | 'report';
