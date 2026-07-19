@@ -8,6 +8,7 @@ from app.api.v1.routes.resume import router as resume_router
 from app.api.v1.routes.report import router as report_router
 from app.api.v1.routes.embeddings import router as embeddings_router
 from app.api.v1.routes.feedback import router as feedback_router
+from app.api.v1.routes.linkedin_post import router as linkedin_post_router
 
 app = FastAPI(
     title="LARP Detector API",
@@ -64,6 +65,12 @@ app.include_router(
     github_router,
     prefix="/api/v1/github",
     tags=["github"]
+)
+
+app.include_router(
+    linkedin_post_router,
+    prefix="/api/v1/linkedin-post",
+    tags=["linkedin-post"]
 )
 
 @app.get("/")

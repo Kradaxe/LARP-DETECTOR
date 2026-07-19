@@ -2,25 +2,32 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { analyzeText } from '../services/api';
+import { analyzeLinkedInPost } from '../services/api';
 
-export default function InputBox() {
-  const [text, setText] = useState('');
+export default function LinkedInPostInput() {
+  const [postUrl, setPostUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!text.trim()) return;
+    const clean = postUrl.trim();
+    if (!clean) return;
+
+    // Basic LinkedIn URL validation
+    if (!clean.includes('linkedin.com')) {
+      setError('Please enter a valid LinkedIn post URL');
+      return;
+    }
 
     setLoading(true);
     setError('');
     try {
-      const result = await analyzeText(text);
-      router.push(`/results?data=${encodeURIComponent(JSON.stringify(result))}`);
+      const result = await analyzeLinkedInPost(clean);
+      router.push(`/linkedin-post/results?data=${encodeURIComponent(JSON.stringify(result))}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Analysis failed');
+      setError(err instanceof Error ? err.message : 'LinkedIn post analysis failed');
     } finally {
       setLoading(false);
     }
@@ -30,17 +37,21 @@ export default function InputBox() {
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="text-input" className="block text-sm font-semibold text-slate-700 mb-2">
-            Technical claim or experience
+          <label htmlFor="linkedin-url" className="block text-sm font-semibold text-slate-700 mb-2">
+            LinkedIn post URL
           </label>
-          <textarea
-            id="text-input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="e.g., I built a microservices architecture using FastAPI, Redis, and PostgreSQL that handles 10k requests per second..."
-            className="w-full h-40 p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none text-sm bg-slate-50 focus:bg-white transition-colors placeholder:text-slate-400"
+          <input
+            id="linkedin-url"
+            type="url"
+            value={postUrl}
+            onChange={(e) => setPostUrl(e.target.value)}
+            placeholder="https://www.linkedin.com/posts/username-post-id-1234567890"
+            className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50 focus:bg-white transition-colors placeholder:text-slate-400 text-sm"
             disabled={loading}
           />
+          <p className="text-xs text-slate-500 mt-2">
+            Paste the URL of a LinkedIn post to analyze its technical credibility
+          </p>
         </div>
         {error && (
           <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 p-3 rounded-lg">
@@ -52,7 +63,7 @@ export default function InputBox() {
         )}
         <button
           type="submit"
-          disabled={loading || !text.trim()}
+          disabled={loading || !postUrl.trim()}
           className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed transition-all duration-300 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 flex items-center justify-center gap-2"
         >
           {loading ? (
@@ -61,14 +72,14 @@ export default function InputBox() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              Analyzing...
+              Analyzing Post...
             </>
           ) : (
             <>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
-              Analyze Credibility
+              Analyze LinkedIn Post
             </>
           )}
         </button>

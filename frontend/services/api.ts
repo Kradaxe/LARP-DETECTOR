@@ -2,6 +2,7 @@ import {
   AnalyzeResponse,
   FeedbackRequest,
   GitHubAnalysisResponse,
+  LinkedInPostAnalysisResponse,
   RecruiterReportResponse,
   ResumeAnalysisResponse,
 } from '../types/analysis';
@@ -68,4 +69,13 @@ export async function submitFeedback(feedback: FeedbackRequest): Promise<{ messa
 export async function checkHealth(): Promise<{ status: string }> {
   const response = await fetch(`${API_BASE_URL}/api/v1/health`);
   return handleResponse(response, 'API is unreachable');
+}
+
+export async function analyzeLinkedInPost(postUrl: string): Promise<LinkedInPostAnalysisResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/linkedin-post/analyze-linkedin-post`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ post_url: postUrl }),
+  });
+  return handleResponse(response, 'Failed to analyze LinkedIn post');
 }

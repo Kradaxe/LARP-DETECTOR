@@ -71,4 +71,32 @@ export interface FeedbackRequest {
   recruiter_id?: string;
 }
 
-export type AnalysisTab = 'claim' | 'resume' | 'github' | 'report';
+export type AnalysisTab = 'claim' | 'resume' | 'github' | 'linkedin-post' | 'report';
+
+export interface LinkedInPostAnalysisResponse {
+  post_url: string;
+  credibility_score: number;
+  verdict: string;
+  post_content: {
+    title: string;
+    body: string;
+    author: string;
+    created_at: string;
+    likes_count: number;
+    comments_count: number;
+  };
+  technical_indicators: {
+    code_blocks: number;
+    technical_terms: string[];
+    specific_details: string[];
+  };
+  credibility_signals: {
+    specificity: number;
+    technical_depth: number;
+    evidence_quality: number;
+    engagement_quality: number;
+  };
+  strengths: string[];
+  weaknesses: string[];
+  reasoning: string;
+}
