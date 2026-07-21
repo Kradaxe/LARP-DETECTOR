@@ -34,10 +34,10 @@ export default function LinkedInPostInput() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="glass-card p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="linkedin-url" className="block text-sm font-semibold text-slate-700 mb-2">
+          <label htmlFor="linkedin-url" className="block text-sm font-bold text-slate-200 mb-2">
             LinkedIn post URL
           </label>
           <input
@@ -46,15 +46,15 @@ export default function LinkedInPostInput() {
             value={postUrl}
             onChange={(e) => setPostUrl(e.target.value)}
             placeholder="https://www.linkedin.com/posts/username-post-id-1234567890"
-            className="w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50 focus:bg-white transition-colors placeholder:text-slate-400 text-sm"
+            className="w-full p-4 border border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-slate-800 focus:bg-slate-900 transition-colors placeholder:text-slate-500 text-sm text-slate-100"
             disabled={loading}
           />
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-slate-400 mt-2">
             Paste the URL of a LinkedIn post to analyze its technical credibility
           </p>
         </div>
         {error && (
-          <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+          <div className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 p-3 rounded-lg border border-red-500/20">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -64,7 +64,7 @@ export default function LinkedInPostInput() {
         <button
           type="submit"
           disabled={loading || !postUrl.trim()}
-          className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 disabled:from-slate-300 disabled:to-slate-400 disabled:cursor-not-allowed transition-all duration-300 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 flex items-center justify-center gap-2"
+          className="w-full bg-gradient-to-r from-orange-500 to-amber-600 text-slate-950 py-3 px-6 rounded-xl font-bold hover:from-orange-600 hover:to-amber-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed disabled:text-slate-400 transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-xl hover:shadow-orange-500/30 flex items-center justify-center gap-2"
         >
           {loading ? (
             <>

@@ -24,23 +24,23 @@ export default function TabNav({ active, onChange }: TabNavProps) {
           onClick={() => onChange(tab.id)}
           className={`relative group text-left p-4 rounded-xl border-2 transition-all duration-300 ${
             active === tab.id
-              ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-cyan-50 shadow-md shadow-blue-500/10'
-              : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-md'
+              ? 'border-orange-500 bg-gradient-to-br from-orange-500/10 to-amber-500/10 shadow-lg shadow-orange-500/20'
+              : 'border-slate-700 bg-slate-800 hover:border-orange-500/50 hover:shadow-lg'
           }`}
         >
           <div className="flex items-start gap-3">
             <span className="text-2xl">{tab.icon}</span>
             <div className="flex-1">
-              <p className={`font-semibold text-sm transition-colors ${
-                active === tab.id ? 'text-blue-700' : 'text-slate-800 group-hover:text-blue-600'
+              <p className={`font-bold text-sm transition-colors ${
+                active === tab.id ? 'text-orange-400' : 'text-slate-200 group-hover:text-orange-400'
               }`}>
                 {tab.label}
               </p>
-              <p className="text-xs text-slate-500 mt-1">{tab.description}</p>
+              <p className="text-xs text-slate-400 mt-1">{tab.description}</p>
             </div>
           </div>
           {active === tab.id && (
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full shadow-md"></div>
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full shadow-md"></div>
           )}
         </button>
       ))}

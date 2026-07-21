@@ -4,29 +4,29 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-slate-50 via-cyan-50 to-emerald-50 text-slate-900;
+    @apply bg-slate-950 text-slate-100;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-bold tracking-tight;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-white/80 backdrop-blur-xl rounded-xl border border-white/20 shadow-xl;
+    @apply bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-800 shadow-2xl;
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-orange-400 to-amber-500 bg-clip-text text-transparent;
   }
   
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30;
+    @apply bg-gradient-to-r from-orange-500 to-amber-600 text-slate-950 py-3 px-6 rounded-xl font-bold hover:from-orange-600 hover:to-amber-700 transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-xl hover:shadow-orange-500/30;
   }
   
   .input-field {
-    @apply w-full p-4 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-50 focus:bg-white transition-colors placeholder:text-slate-400;
+    @apply w-full p-4 border border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-slate-800 focus:bg-slate-900 transition-colors placeholder:text-slate-500 text-slate-100;
   }
 }

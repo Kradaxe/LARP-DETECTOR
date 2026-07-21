@@ -28,30 +28,30 @@ export default function GitHubInput() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+    <div className="glass-card p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="github-username" className="block text-sm font-medium text-slate-700 mb-2">
+          <label htmlFor="github-username" className="block text-sm font-bold text-slate-200 mb-2">
             GitHub username
           </label>
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">@</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">@</span>
             <input
               id="github-username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="octocat"
-              className="w-full pl-8 pr-4 py-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+              className="w-full pl-8 pr-4 py-3 border border-slate-700 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm bg-slate-800 focus:bg-slate-900 transition-colors placeholder:text-slate-500 text-slate-100"
               disabled={loading}
             />
           </div>
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-red-400 bg-red-500/10 p-3 rounded-lg border border-red-500/20">{error}</p>}
         <button
           type="submit"
           disabled={loading || !username.trim()}
-          className="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+          className="w-full bg-gradient-to-r from-orange-500 to-amber-600 text-slate-950 py-3 px-6 rounded-xl font-bold hover:from-orange-600 hover:to-amber-700 disabled:from-slate-600 disabled:to-slate-700 disabled:cursor-not-allowed disabled:text-slate-400 transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-xl hover:shadow-orange-500/30"
         >
           {loading ? 'Analyzing Profile...' : 'Analyze GitHub Profile'}
         </button>

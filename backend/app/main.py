@@ -52,11 +52,6 @@ app.include_router(
 )
 
 app.include_router(
-    github_router,
-    prefix="/api/v1"
-)
-
-app.include_router(
     health_router,
     prefix="/api/v1"
 )
