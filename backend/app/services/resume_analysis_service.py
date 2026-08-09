@@ -2,6 +2,7 @@ from typing import List
 from app.services.analysis_service import analyze_text
 from app.services.claim_splitter import ClaimSplitter
 from app.services.verdict_service import verdict as get_verdict
+from app.services.persistence_service import save_analysis
 from app.schemas.response_schema import ClaimAnalysis
 
 
@@ -75,11 +76,21 @@ class ResumeAnalysisService:
             if ca.credibility_score >= 75
         ]
         
+        # Save analysis to database
+        analysis_id = save_analysis(
+            text=text,
+            score=overall_score,
+            verdict=overall_verdict,
+            technologies=[],  # Could be extracted from claim analyses
+            reasoning=f"Resume analysis with {num_analyzed} claims"
+        )
+        
         return {
             "overall_credibility_score": overall_score,
             "overall_verdict": overall_verdict,
             "claim_analyses": claim_analyses,
             "suspicious_claims": suspicious_claims,
             "strongest_claims": strongest_claims,
-            "total_claims_analyzed": num_analyzed
+            "total_claims_analyzed": num_analyzed,
+            "analysis_id": analysis_id
         }

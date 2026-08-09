@@ -1,6 +1,7 @@
 from app.services.github_metrics_service import GitHubMetricsService
 from app.services.github_credibility_service import GitHubCredibilityService
 from app.services.verdict_service import verdict as get_verdict
+from app.services.persistence_service import save_analysis
 
 
 async def analyze_github_profile(profile: dict, repos: list) -> dict:
@@ -25,6 +26,15 @@ async def analyze_github_profile(profile: dict, repos: list) -> dict:
     # Get verdict based on credibility score
     verdict = get_verdict(credibility["credibility_score"])
     
+    # Save analysis to database
+    analysis_id = save_analysis(
+        text=f"GitHub profile analysis for {username}",
+        score=credibility["credibility_score"],
+        verdict=verdict,
+        technologies=list(metrics.get("language_metrics", {}).get("languages", {}).keys()),
+        reasoning=credibility["reasoning"]
+    )
+    
     return {
         "username": username,
         "credibility_score": credibility["credibility_score"],
@@ -36,5 +46,6 @@ async def analyze_github_profile(profile: dict, repos: list) -> dict:
         "signal_scores": credibility["signal_scores"],
         "strengths": credibility["strengths"],
         "weaknesses": credibility["weaknesses"],
-        "reasoning": credibility["reasoning"]
+        "reasoning": credibility["reasoning"],
+        "analysis_id": analysis_id
     }

@@ -10,6 +10,7 @@ import AnalysisSummary from '../../components/AnalysisSummary';
 import RecommendationCard from '../../components/RecommendationCard';
 import StrengthsWeaknesses from '../../components/StrengthsWeaknesses';
 import InterviewQuestions from '../../components/InterviewQuestions';
+import FeedbackForm from '../../components/FeedbackForm';
 import { AnalyzeResponse } from '../../types/analysis';
 
 function ResultsContent() {
@@ -59,6 +60,8 @@ function ResultsContent() {
       </div>
 
       <InterviewQuestions questions={result.interview_questions ?? []} />
+
+      <FeedbackForm analysisId={result.analysis_id} />
 
       <div className="text-center pt-4">
         <Link

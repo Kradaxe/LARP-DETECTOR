@@ -10,6 +10,7 @@ export interface AnalyzeResponse {
   weaknesses: string[];
   interview_questions: string[];
   reasoning: string;
+  analysis_id?: number;
 }
 
 export interface AnalyzeRequest {
@@ -30,6 +31,7 @@ export interface ResumeAnalysisResponse {
   suspicious_claims: string[];
   strongest_claims: string[];
   total_claims_analyzed: number;
+  analysis_id?: number;
 }
 
 export interface GitHubAnalysisResponse {
@@ -44,6 +46,7 @@ export interface GitHubAnalysisResponse {
   strengths: string[];
   weaknesses: string[];
   reasoning: string;
+  analysis_id?: number;
 }
 
 export interface CredibilityBreakdown {

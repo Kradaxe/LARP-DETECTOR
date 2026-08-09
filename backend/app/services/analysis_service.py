@@ -60,12 +60,14 @@ Return ONLY the JSON, no other text."""
         "weaknesses": []
     }
 
-    result["analysis_id"] = save_analysis(
+    analysis_id = save_analysis(
         text=text,
         score=score,
         verdict=verdict,
         technologies=signals["technologies"]["technologies_found"],
         reasoning=parsed["reasoning"],
     )
+    
+    result["analysis_id"] = analysis_id
 
     return result

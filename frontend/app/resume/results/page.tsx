@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ScoreCard from '../../../components/ScoreCard';
 import ClaimAnalysisList from '../../../components/ClaimAnalysisList';
+import FeedbackForm from '../../../components/FeedbackForm';
 import { ResumeAnalysisResponse } from '../../../types/analysis';
 
 function ResumeResultsContent() {
@@ -44,6 +45,8 @@ function ResumeResultsContent() {
         suspiciousClaims={result.suspicious_claims}
         strongestClaims={result.strongest_claims}
       />
+
+      <FeedbackForm analysisId={result.analysis_id} />
 
       <div className="text-center pt-4">
         <Link

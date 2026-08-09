@@ -7,6 +7,7 @@ import ScoreCard from '../../../components/ScoreCard';
 import GitHubMetricsCard from '../../../components/GitHubMetricsCard';
 import StrengthsWeaknesses from '../../../components/StrengthsWeaknesses';
 import AnalysisSummary from '../../../components/AnalysisSummary';
+import FeedbackForm from '../../../components/FeedbackForm';
 import { GitHubAnalysisResponse } from '../../../types/analysis';
 
 function GitHubResultsContent() {
@@ -47,6 +48,8 @@ function GitHubResultsContent() {
       <StrengthsWeaknesses strengths={result.strengths} weaknesses={result.weaknesses} />
 
       <AnalysisSummary reasoning={result.reasoning} />
+
+      <FeedbackForm analysisId={result.analysis_id} />
 
       <div className="text-center pt-4">
         <Link
