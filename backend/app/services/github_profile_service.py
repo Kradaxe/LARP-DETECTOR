@@ -2,6 +2,7 @@ from app.services.github_metrics_service import GitHubMetricsService
 from app.services.github_credibility_service import GitHubCredibilityService
 from app.services.verdict_service import verdict as get_verdict
 from app.services.persistence_service import save_analysis
+from app.services.learning_service import LearningService
 
 
 async def analyze_github_profile(profile: dict, repos: list) -> dict:
@@ -26,10 +27,14 @@ async def analyze_github_profile(profile: dict, repos: list) -> dict:
     # Get verdict based on credibility score
     verdict = get_verdict(credibility["credibility_score"])
     
+    # Apply learning-based score adjustment
+    adjusted_score = LearningService.get_score_adjustment(credibility["credibility_score"])
+    learning_adjusted = adjusted_score != credibility["credibility_score"]
+    
     # Save analysis to database
     analysis_id = save_analysis(
         text=f"GitHub profile analysis for {username}",
-        score=credibility["credibility_score"],
+        score=credibility["credibility_score"],  # Store original score
         verdict=verdict,
         technologies=list(metrics.get("language_metrics", {}).get("languages", {}).keys()),
         reasoning=credibility["reasoning"]
@@ -37,7 +42,9 @@ async def analyze_github_profile(profile: dict, repos: list) -> dict:
     
     return {
         "username": username,
-        "credibility_score": credibility["credibility_score"],
+        "credibility_score": adjusted_score,
+        "original_score": credibility["credibility_score"],
+        "learning_adjusted": learning_adjusted,
         "verdict": verdict,
         "basic_metrics": metrics["basic_metrics"],
         "engagement_metrics": metrics["engagement_metrics"],

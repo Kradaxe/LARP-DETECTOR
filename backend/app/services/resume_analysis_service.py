@@ -3,6 +3,7 @@ from app.services.analysis_service import analyze_text
 from app.services.claim_splitter import ClaimSplitter
 from app.services.verdict_service import verdict as get_verdict
 from app.services.persistence_service import save_analysis
+from app.services.learning_service import LearningService
 from app.schemas.response_schema import ClaimAnalysis
 
 
@@ -65,6 +66,10 @@ class ResumeAnalysisService:
         
         overall_verdict = get_verdict(overall_score)
         
+        # Apply learning-based score adjustment
+        adjusted_score = LearningService.get_score_adjustment(overall_score)
+        learning_adjusted = adjusted_score != overall_score
+        
         # Categorize claims
         suspicious_claims = [
             ca.claim for ca in claim_analyses 
@@ -79,14 +84,16 @@ class ResumeAnalysisService:
         # Save analysis to database
         analysis_id = save_analysis(
             text=text,
-            score=overall_score,
+            score=overall_score,  # Store original score
             verdict=overall_verdict,
             technologies=[],  # Could be extracted from claim analyses
             reasoning=f"Resume analysis with {num_analyzed} claims"
         )
         
         return {
-            "overall_credibility_score": overall_score,
+            "overall_credibility_score": adjusted_score,
+            "original_score": overall_score,
+            "learning_adjusted": learning_adjusted,
             "overall_verdict": overall_verdict,
             "claim_analyses": claim_analyses,
             "suspicious_claims": suspicious_claims,

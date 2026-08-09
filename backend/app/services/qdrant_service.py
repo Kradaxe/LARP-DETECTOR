@@ -14,7 +14,9 @@ class QdrantService:
     def __init__(self):
         self.client = QdrantClient(
             url=settings.QDRANT_URL,
-            api_key=settings.QDRANT_API_KEY if settings.QDRANT_API_KEY else None
+            api_key=settings.QDRANT_API_KEY if settings.QDRANT_API_KEY else None,
+            timeout=30,
+            check_compatibility=False
         )
         self.embedding_service = EmbeddingService()
         self._ensure_collection_exists()

@@ -23,7 +23,7 @@ class EmbeddingService:
             response = self.client.models.embed_content(
                 model="models/text-embedding-004",
                 contents=text,
-                config=genai.EmbeddingConfig(task_type="RETRIEVAL_DOCUMENT")
+                config=genai.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT")
             )
             return response.embeddings[0].values
         except Exception as e:

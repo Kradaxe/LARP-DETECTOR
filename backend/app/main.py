@@ -9,6 +9,7 @@ from app.api.v1.routes.report import router as report_router
 from app.api.v1.routes.embeddings import router as embeddings_router
 from app.api.v1.routes.feedback import router as feedback_router
 from app.api.v1.routes.linkedin_post import router as linkedin_post_router
+from app.services.redis_service import RedisService
 
 app = FastAPI(
     title="LARP Detector API",
@@ -18,8 +19,11 @@ app = FastAPI(
 # Add rate limiting middleware (60 requests/minute, 1000 requests/hour)
 @app.middleware("http")
 async def rate_limit_middleware(request, call_next):
-    from app.services.redis_service import RedisService
     from fastapi.responses import JSONResponse
+    
+    # Skip rate limiting if Redis is not available
+    if not RedisService.REDIS_AVAILABLE:
+        return await call_next(request)
     
     # Get client IP
     client_ip = request.headers.get("X-Forwarded-For", 

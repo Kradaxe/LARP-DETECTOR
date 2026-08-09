@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from app.schemas.request_schema import FeedbackRequest
 from app.services.feedback_service import FeedbackService
+from app.services.learning_service import LearningService
 
 router = APIRouter()
 
@@ -64,3 +65,21 @@ async def get_feedback_stats(days: int = Query(30, ge=1, le=365)):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get feedback stats: {str(e)}")
+
+
+@router.get("/learning")
+async def get_learning_insights(days: int = Query(30, ge=1, le=365)):
+    """
+    Get learning insights from feedback data.
+    
+    Args:
+        days: Number of days to look back (default: 30, max: 365)
+    
+    Returns:
+        Learning insights including score bias and recommendations
+    """
+    try:
+        insights = LearningService.get_feedback_patterns(days=days)
+        return insights
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get learning insights: {str(e)}")

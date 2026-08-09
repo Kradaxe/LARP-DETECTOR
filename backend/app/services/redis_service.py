@@ -3,7 +3,6 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
-    print("Redis module not available - caching and rate limiting will be disabled")
 
 import json
 import hashlib
@@ -14,6 +13,7 @@ class RedisService:
     """Service for Redis operations including caching and rate limiting."""
     
     _client = None
+    REDIS_AVAILABLE = REDIS_AVAILABLE
     
     @classmethod
     def get_client(cls) -> redis.Redis:
@@ -41,8 +41,7 @@ class RedisService:
             if value:
                 return json.loads(value)
             return None
-        except Exception as e:
-            print(f"Redis cache get error: {e}")
+        except Exception:
             return None
     
     @classmethod
@@ -56,8 +55,7 @@ class RedisService:
                 return False
             serialized = json.dumps(value)
             return client.setex(key, ttl, serialized)
-        except Exception as e:
-            print(f"Redis cache set error: {e}")
+        except Exception:
             return False
     
     @classmethod
@@ -70,8 +68,7 @@ class RedisService:
             if client is None:
                 return False
             return client.delete(key) > 0
-        except Exception as e:
-            print(f"Redis cache delete error: {e}")
+        except Exception:
             return False
     
     @classmethod
@@ -104,8 +101,7 @@ class RedisService:
             remaining = max(0, limit - current)
             
             return allowed, remaining
-        except Exception as e:
-            print(f"Redis rate limit error: {e}")
+        except Exception:
             # Fail open - allow request if Redis is down
             return True, limit
     
@@ -124,8 +120,7 @@ class RedisService:
                 "current": current,
                 "ttl": ttl if ttl > 0 else 0
             }
-        except Exception as e:
-            print(f"Redis get rate limit info error: {e}")
+        except Exception:
             return {"current": 0, "ttl": 0}
     
     @staticmethod
