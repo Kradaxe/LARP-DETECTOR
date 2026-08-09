@@ -20,6 +20,7 @@ async def submit_feedback(request: FeedbackRequest):
         Confirmation of feedback submission
     """
     try:
+        print(f"Received feedback request: {request}")
         feedback = FeedbackService.create_feedback(
             analysis_id=request.analysis_id,
             recruiter_agreed=request.recruiter_agreed,
@@ -27,6 +28,7 @@ async def submit_feedback(request: FeedbackRequest):
             recruiter_id=request.recruiter_id
         )
         
+        print(f"Feedback created with ID: {feedback.id}")
         return {
             "message": "Feedback submitted successfully",
             "feedback_id": feedback.id,
@@ -34,10 +36,13 @@ async def submit_feedback(request: FeedbackRequest):
             "recruiter_agreed": feedback.recruiter_agreed
         }
     except LookupError as e:
+        print(f"Lookup error: {e}")
         raise HTTPException(status_code=404, detail=str(e))
     except ValueError as e:
+        print(f"Value error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        print(f"Unexpected error: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to submit feedback: {str(e)}")
 
 

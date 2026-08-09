@@ -38,10 +38,13 @@ export default function FeedbackForm({ analysisId }: FeedbackFormProps) {
         recruiter_comments: comments || undefined,
       };
 
-      await submitFeedback(feedback);
+      console.log('Submitting feedback:', feedback);
+      const result = await submitFeedback(feedback);
+      console.log('Feedback submission result:', result);
       setSubmitted(true);
     } catch (err) {
-      setError('Failed to submit feedback. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to submit feedback. Please try again.';
+      setError(errorMessage);
       console.error('Feedback submission error:', err);
     } finally {
       setIsSubmitting(false);

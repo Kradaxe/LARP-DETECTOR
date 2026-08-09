@@ -12,18 +12,22 @@ def save_analysis(
 
     db = SessionLocal()
     try:
+        tech_string = ",".join(technologies) if technologies and isinstance(technologies, list) else ""
+        
         analysis = Analysis(
             input_text=text,
             credibility_score=score,
             verdict=verdict,
-            technologies=",".join(technologies),
+            technologies=tech_string,
             reasoning=reasoning,
         )
         db.add(analysis)
         db.commit()
         db.refresh(analysis)
+        print(f"Saved analysis with ID: {analysis.id}")
         return analysis.id
-    except Exception:
+    except Exception as e:
+        print(f"Error saving analysis: {e}")
         db.rollback()
         raise
     finally:
