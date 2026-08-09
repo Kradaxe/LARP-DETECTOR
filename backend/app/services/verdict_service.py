@@ -1,12 +1,12 @@
 def verdict(score: int):
 
     if score >= 85:
-        return "Highly Credible"
+        return "Actually Legit 💯"
 
     if score >= 70:
-        return "Likely Genuine"
+        return "Probably Real (Maybe) 🤔"
 
     if score >= 50:
-        return "Possibly Exaggerated"
+        return "Sketchy Vibes 🤨"
 
-    return "Potential LARP"
+    return "Total LARP 🎭"

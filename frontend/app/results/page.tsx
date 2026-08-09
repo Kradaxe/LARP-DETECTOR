@@ -31,8 +31,14 @@ function ResultsContent() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-slate-900">Claim Analysis</h1>
-        <p className="text-slate-500 mt-2">Credibility assessment for your technical claim</p>
+        <h1 className="text-2xl font-semibold text-gray-900">🎭 LARP Analysis Results</h1>
+        <p className="text-gray-600 mt-2">
+          {result.credibility_score < 50 
+            ? "Yep, that's definitely a LARP 🎭" 
+            : result.credibility_score < 70 
+            ? "Sketchy vibes detected... 🤨" 
+            : "Actually might be legit... maybe? 🤔"}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -66,9 +72,9 @@ function ResultsContent() {
       <div className="text-center pt-4">
         <Link
           href="/"
-          className="inline-block bg-indigo-600 text-white py-3 px-8 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+          className="inline-block btn-primary"
         >
-          Analyze Another
+          🎭 Catch Another LARP
         </Link>
       </div>
     </div>
@@ -77,8 +83,8 @@ function ResultsContent() {
 
 export default function ResultsPage() {
   return (
-    <main className="min-h-screen bg-slate-50 py-10 px-4">
-      <Suspense fallback={<div className="text-center py-20 text-slate-500">Loading results...</div>}>
+    <main className="min-h-screen bg-gray-50 py-10 px-4">
+      <Suspense fallback={<div className="text-center py-20 text-gray-500">Loading results...</div>}>
         <ResultsContent />
       </Suspense>
     </main>
