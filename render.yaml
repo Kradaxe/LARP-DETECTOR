@@ -1,0 +1,32 @@
+services:
+  # Backend API
+  - type: web
+    name: larp-detector-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: larp-detector-db
+          property: connectionString
+
+  # Frontend
+  - type: web
+    name: larp-detector-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://larp-detector-api.onrender.com
+
+databases:
+  - name: larp-detector-db
+    databaseName: larp_detector
+    user: larp_user
+    plan: free
