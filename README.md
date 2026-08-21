@@ -1,3 +1,7 @@
+live at : https://larp-detector-plum.vercel.app/
+
+backend live at : https://larp-detector.onrender.com/
+
 # LARP Detector
 
 > **AI-powered credibility analysis for technical claims, resumes, and candidate profiles.**
