@@ -3,6 +3,7 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
+    redis = None
 
 import json
 import hashlib
@@ -16,7 +17,7 @@ class RedisService:
     REDIS_AVAILABLE = REDIS_AVAILABLE
     
     @classmethod
-    def get_client(cls) -> redis.Redis:
+    def get_client(cls):
         """Get or create Redis client singleton."""
         if not REDIS_AVAILABLE:
             return None
