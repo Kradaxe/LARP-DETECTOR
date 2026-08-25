@@ -7,7 +7,7 @@ import {
   ResumeAnalysisResponse,
 } from '../types/analysis';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.API_KEY || 'http://localhost:8000';
 
 async function handleResponse<T>(response: Response, fallbackMessage: string): Promise<T> {
   if (!response.ok) {
