@@ -23,7 +23,7 @@ services:
     plan: free
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://larp-detector-api.onrender.com/
+        value: https://larp-detector.onrender.com
 
 databases:
   - name: larp-detector-db
