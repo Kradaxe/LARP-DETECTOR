@@ -7,7 +7,7 @@ from app.services.analysis_service import analyze_text
 router = APIRouter()
 
 @router.post(
-    "/analyze",
+    "/analyze/",
     response_model=AnalyzeResponse
 )
 async def analyze(

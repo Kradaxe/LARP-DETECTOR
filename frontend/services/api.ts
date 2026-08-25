@@ -18,7 +18,7 @@ async function handleResponse<T>(response: Response, fallbackMessage: string): P
 }
 
 export async function analyzeText(text: string): Promise<AnalyzeResponse> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/analyze`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/analyze/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text }),
