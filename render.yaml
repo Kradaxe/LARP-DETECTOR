@@ -22,8 +22,8 @@ services:
     dockerfilePath: ./frontend/Dockerfile
     plan: free
     envVars:
-      - key: API_KEY
-        value: https://larp-detector-api.onrender.com
+      - key: NEXT_PUBLIC_API_URL
+        value: https://larp-detector-api.onrender.com/
 
 databases:
   - name: larp-detector-db
