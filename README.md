@@ -1,3 +1,6 @@
+STILL UNDER CONSTRUCTION
+
+
 live at : https://larp-detector-plum.vercel.app/
 
 backend live at : https://larp-detector.onrender.com/
@@ -111,7 +114,7 @@ The system extracts deterministic signals and combines them with LLM-generated a
 
 ### 2. Technology Signal Extraction
 
-The analyzer identifies technologies mentioned in a candidate's claim.
+The analyzer identifies technologies that are mentioned in a candidate's claim.
 
 Example:
 
